@@ -2,6 +2,7 @@ package com.agenda;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+// import org.springframework.lang.NonNull; //import @NonNull
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -23,6 +24,9 @@ public class ContatoController {
     @PostMapping("/incluir")
     public ResponseEntity<String> incluir(@RequestBody Contato c) {
         try {
+            if (c == null) {
+            return ResponseEntity.badRequest().body("erro: corpo da requisicao vazio");
+            }
             if (c.nome == null || c.nome.equals("")) {
                 logs.add("erro: nome vazio - " + new Date());
                 return ResponseEntity.badRequest().body("erro: nome obrigatorio");
@@ -119,7 +123,7 @@ public class ContatoController {
                 s = s + "Nome: " + ct.nome + "\n";
                 s = s + "Tel: " + ct.tel + "\n";
                 s = s + "Email: " + ct.email + "\n";
-                s = s + "End: " + ct.end + "\n";
+                s = s + "End: " + ct.endereco + "\n";
                 s = s + "Idade: " + ct.idade + "\n";
                 s = s + "Tipo: " + ct.tipo + "\n";
                 s = s + "Cadastro: " + ct.dataCad + "\n";
@@ -192,7 +196,7 @@ public class ContatoController {
                 s = s + "Nome: " + ct.nome + "\n";
                 s = s + "Tel: " + ct.tel + "\n";
                 s = s + "Email: " + ct.email + "\n";
-                s = s + "End: " + ct.end + "\n";
+                s = s + "End: " + ct.endereco + "\n";
                 s = s + "Idade: " + ct.idade + "\n";
                 s = s + "Tipo: " + ct.tipo + "\n";
                 s = s + "Cadastro: " + ct.dataCad + "\n";
@@ -207,14 +211,18 @@ public class ContatoController {
         }
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editar(@PathVariable Long id, @RequestBody Contato c) {
+    public ResponseEntity<String> editar(@PathVariable long id, @RequestBody Contato c) {
         try {
-            Optional<Contato> op = repo.findById(id);
+            Optional<Contato> op = repo.findById(id);//modificar para @NonNull
             if (!op.isPresent()) {
                 return ResponseEntity.status(404).body("contato nao encontrado");
             }
             Contato atual = op.get();
+            if (c == null) {
+            return ResponseEntity.badRequest().body("erro: corpo da requisicao vazio");
+            }
 
             if (c.nome != null && !c.nome.equals("")) {
                 if (c.nome.length() < 3) {
@@ -242,8 +250,8 @@ public class ContatoController {
                 }
                 atual.email = c.email;
             }
-            if (c.end != null && !c.end.equals("")) {
-                atual.end = c.end;
+            if (c.endereco != null && !c.endereco.equals("")) {
+                atual.endereco = c.endereco;
             }
             if (c.idade > 0) {
                 if (c.idade > 150) {
@@ -271,7 +279,7 @@ public class ContatoController {
             resp = resp + "Nome: " + salvo.nome + "\n";
             resp = resp + "Tel: " + salvo.tel + "\n";
             resp = resp + "Email: " + salvo.email + "\n";
-            resp = resp + "End: " + salvo.end + "\n";
+            resp = resp + "End: " + salvo.endereco + "\n";
             resp = resp + "Idade: " + salvo.idade + "\n";
             resp = resp + "Tipo: " + salvo.tipo + "\n";
             resp = resp + "Ativo: " + salvo.ativo;
@@ -284,7 +292,7 @@ public class ContatoController {
     }
 
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<String> excluir(@PathVariable Long id) {
+    public ResponseEntity<String> excluir(@PathVariable long id) { //@NonNull em long id
         try {
             Optional<Contato> op = repo.findById(id);
             if (!op.isPresent()) {

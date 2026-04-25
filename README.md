@@ -28,7 +28,7 @@ A aplicação sobe em `http://localhost:8080` com banco H2 em memória (console 
   "nome": "Maria Silva",
   "tel": "11999998888",
   "email": "maria@exemplo.com",
-  "end": "Rua A, 100",
+  "endereco": "Rua A, 100",
   "idade": 30,
   "tipo": "AMIGO"
 }
@@ -50,7 +50,7 @@ Tipos permitidos: `FAMILIA`, `AMIGO`, `TRABALHO`, `OUTRO`.
 
 ### Violações de Clean Code
 
-- Nomes ruins e abreviados: `c`, `ct`, `tel`, `end`, `cont`, `op`, `s`, `resp`.
+- Nomes ruins e abreviados: `c`, `ct`, `tel`, `endereco`, `cont`, `op`, `s`, `resp`.
 - Campos `public` na entidade (sem encapsulamento).
 - Mistura de idiomas (português/inglês).
 - Métodos gigantes com muitas responsabilidades (`incluir` tem validação, persistência, email, log e formatação).

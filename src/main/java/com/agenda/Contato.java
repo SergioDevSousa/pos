@@ -20,7 +20,7 @@ public class Contato {
     // email
     public String email;
 
-    public String end; // endereco abreviado
+    public String endereco; // endereco abreviado com palavra reservada END
 
     public int idade;
 
@@ -37,13 +37,13 @@ public class Contato {
     }
 
     // construtor com tudo
-    public Contato(Long id, String nome, String tel, String email, String end, int idade, String tipo, String dataCad,
+    public Contato(Long id, String nome, String tel, String email, String endereco, int idade, String tipo, String dataCad,
             String ativo) {
         this.id = id;
         this.nome = nome;
         this.tel = tel;
         this.email = email;
-        this.end = end;
+        this.endereco = endereco;
         this.idade = idade;
         this.tipo = tipo;
         this.dataCad = dataCad;
@@ -84,11 +84,11 @@ public class Contato {
     }
 
     public String getEnd() {
-        return end;
+        return endereco;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setEnd(String endereco) {
+        this.endereco = endereco;
     }
 
     public int getIdade() {
@@ -152,7 +152,7 @@ public class Contato {
         s = s + "Nome: " + this.nome + " | ";
         s = s + "Tel: " + this.tel + " | ";
         s = s + "Email: " + this.email + " | ";
-        s = s + "End: " + this.end + " | ";
+        s = s + "End: " + this.endereco + " | ";
         s = s + "Idade: " + this.idade + " | ";
         s = s + "Tipo: " + this.tipo + " | ";
         s = s + "Ativo: " + this.ativo;
